@@ -13,7 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { MessengerButtons } from "./messenger-buttons";
-import { CONTACTS } from "@/lib/data";
+import { CONTACTS, MESSENGERS } from "@/lib/data";
 import { getSelectedKit } from "@/lib/selected-kit";
 import { reachGoal } from "@/lib/metrika";
 import { cn } from "@/lib/utils";
@@ -60,8 +60,12 @@ const MESSENGER_OPTIONS = [
     name: "Макс",
     accent: "#0077FF",
     icon: MessagesSquare,
-    href: (text: string) =>
-      `https://max.ru/:share?text=${encodeURIComponent(text)}`,
+    href: (text: string) => {
+      const maxHref =
+        MESSENGERS.find((messenger) => messenger.name === "Макс")?.href ??
+        CONTACTS.phoneHref;
+      return `${maxHref}?text=${encodeURIComponent(text)}`;
+    },
   },
 ];
 
